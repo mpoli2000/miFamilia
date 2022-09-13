@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import FamilyDB
 
 # Create your views here.
 def inicio(request):
@@ -8,12 +9,17 @@ def inicio(request):
 def ingresar(request):
     datos = {'nombre': 'Martin', 
     'apellido': 'Poli', 
-    'email': 'martin@gamil.com', 
-    'fecha_nacimiento': None,
-    'edad': 0,
+    'email': 'martin@gmail.com', 
+    'created_at': '13/09/2022',
+    'updated_at': '13/09/2022',
+    'edad': 51,
     'estado': True
     }
     return render(request, 'ingresar.html')
 
 def listar(request):
-    return render(request, 'listar.html')
+    datos = FamilyDB.objects.all()
+    for dato in datos:
+        print(dato.nombre)
+
+    return render(request, 'listar.html', {'datos': datos})
